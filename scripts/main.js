@@ -55,7 +55,7 @@ $("#garageGrid").innerHTML = GARAGE.map((b) => `
         ${b.specs.map(([k, v]) => `<li><span>${esc(k)}</span><b>${esc(v)}</b></li>`).join("")}
       </ul>
       ${b.video ? `<button class="bike__link" data-video="${esc(b.video)}"
-        data-title="${esc(b.name)}">Watch the build &rarr;</button>` : ""}
+        data-cur="PLAY" data-title="${esc(b.name)}">Watch the build &rarr;</button>` : ""}
     </div>
   </article>`).join("");
 
@@ -72,9 +72,9 @@ const CATS = [
         aria-selected="${i === 0}">${esc(label)}<em>${k === "all" ? VIDEOS.length : counts[k]}</em></button>`)
     .join("");
 
-  $("#vidGrid").innerHTML = VIDEOS.map((v) => `
-    <button class="vid rv" data-cat="${esc(v.category)}" data-video="${esc(v.id)}"
-            data-title="${esc(v.title)}">
+  $("#vidGrid").innerHTML = VIDEOS.map((v, i) => `
+    <button class="vid rv${i === 0 ? " vid--feat" : ""}" data-cat="${esc(v.category)}"
+            data-video="${esc(v.id)}" data-cur="PLAY" data-title="${esc(v.title)}">
       <span class="vid__shot">
         <img src="${esc(v.thumb)}" alt="" loading="lazy">
         <span class="vid__cat">${esc(v.category.toUpperCase())}</span>
@@ -100,7 +100,7 @@ const CATS = [
 
 /* ── shorts rail ──────────────────────────────────────────────────────────── */
 $("#shortsRail").innerHTML = SHORTS.slice(0, 24).map((s) => `
-  <button class="short" data-video="${esc(s.id)}" data-short="1"
+  <button class="short" data-video="${esc(s.id)}" data-short="1" data-cur="PLAY"
           data-title="${esc(s.title || "Short")}">
     <span class="short__shot">
       <img src="${esc(s.thumb)}" alt="" loading="lazy">
@@ -111,7 +111,7 @@ $("#shortsRail").innerHTML = SHORTS.slice(0, 24).map((s) => `
 
 /* ── gallery ──────────────────────────────────────────────────────────────── */
 $("#galGrid").innerHTML = GALLERY.map((g, i) => `
-  <button class="gal__i" data-img="${esc(g.src)}" data-i="${i}"
+  <button class="gal__i" data-img="${esc(g.src)}" data-i="${i}" data-cur="VIEW"
           aria-label="Open still ${i + 1} of ${GALLERY.length}">
     <img src="${esc(g.src)}" alt="Operator Surron's purple Sur-Ron, still ${i + 1}"
          width="${g.w}" height="${g.h}" loading="lazy" decoding="async">
@@ -259,7 +259,7 @@ $("#kitGrid").innerHTML = KIT.map((k) => {
   });
 }
 
-/* ── reveal + count-up ────────────────────────────────────────────────────── */
+/* ── reveal ───────────────────────────────────────────────────────────────── */
 {
   const io = new IntersectionObserver((entries) => {
     entries.forEach((en) => {
@@ -268,46 +268,21 @@ $("#kitGrid").innerHTML = KIT.map((k) => {
       io.unobserve(en.target);
     });
   }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
+  $$(".sect__head, .filters, .brands, .contact").forEach((el) => el.classList.add("rv"));
   $$(".rv").forEach((el, i) => {
     el.style.transitionDelay = `${Math.min(i % 8, 7) * 55}ms`;
     io.observe(el);
   });
-
-  const fmt = (n) => n.toLocaleString("en-US");
-  const countUp = (el) => {
-    const target = Number(el.dataset.count);
-    const display = el.dataset.display;
-    const suffix = el.dataset.suffix || "";
-    const dur = REDUCED ? 0 : 1400;
-    const t0 = performance.now();
-    const tick = (now) => {
-      const p = dur ? clamp((now - t0) / dur) : 1;
-      const eased = 1 - Math.pow(1 - p, 3);
-      if (display) {
-        const m = display.match(/^([\d.,]+)([A-Z]?)$/);
-        const end = parseFloat(m[1].replace(/,/g, ""));
-        const dec = (m[1].split(".")[1] || "").length;
-        el.innerHTML = `${(end * eased).toFixed(dec)}<i>${m[2]}</i>`;
-      } else {
-        el.textContent = fmt(Math.round(target * eased)) + suffix;
-      }
-      if (p < 1) requestAnimationFrame(tick);
-    };
-    requestAnimationFrame(tick);
-  };
-
-  const cio = new IntersectionObserver((entries) => {
-    entries.forEach((en) => {
-      if (!en.isIntersecting) return;
-      countUp(en.target);
-      cio.unobserve(en.target);
-    });
-  }, { threshold: 0.4 });
-  $$("[data-count]").forEach((el) => cio.observe(el));
 }
 
 /* ── year ─────────────────────────────────────────────────────────────────── */
 $("#yr").textContent = new Date().getFullYear();
+
+/* ══ FX — cursor, odometers, kinetic strips, scrollspy ═════════════════════ */
+let FX = null;
+import("./fx.js")
+  .then((m) => { FX = m; m.initFX({ reduced: REDUCED }); })
+  .catch((e) => console.warn("[fx] unavailable:", e));
 
 /* ══ THE RIG — real photography + blueprint overlay ════════════════════════ */
 import("./rig.js")
@@ -330,10 +305,14 @@ function applyLiveStats(next, deltas) {
     const tile = $$(".stat")[i];
     if (!tile) return;
     const b = tile.querySelector("b");
+    const disp = compact(next[key]);
     b.dataset.count = String(next[key]);
-    b.dataset.display = compact(next[key]);
-    const m = compact(next[key]).match(/^([\d.,]+)([A-Z]?)$/);
-    b.innerHTML = `${m[1]}<i>${m[2] || ""}</i>`;
+    b.dataset.display = disp;
+    if (FX) FX.odo(b, disp);          // digits roll to the new reading
+    else {
+      const m = disp.match(/^([\d.,]+)([A-Z]?)$/);
+      b.innerHTML = `${m[1]}<i>${m[2] || ""}</i>`;
+    }
 
     const grew = deltas?.[key] > 0;
     if (!grew) return;
@@ -355,7 +334,7 @@ function applyLiveStats(next, deltas) {
   const live = $("#statsLive");
   if (live) {
     live.dataset.state = "on";
-    live.querySelector("span").textContent = "Live · updated just now";
+    live.querySelector("span").textContent = "Live";
   }
 }
 

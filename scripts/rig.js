@@ -49,6 +49,9 @@ export function initRig({ reduced = false } = {}) {
   const labEl = document.querySelector("#rigLabel");
   const subEl = document.querySelector("#rigSub");
   const idxEl = document.querySelector("#rigIdx");
+  const numEl = document.querySelector("#rigNum");
+  const scanEl = document.querySelector("#rigScan");
+  const canvasEl = canvas;
   const titleEl = document.querySelector("#rigTitle");
   const copyEl = document.querySelector("#rigCopy");
   const progEl = document.querySelector("#rigProg");
@@ -78,8 +81,40 @@ export function initRig({ reduced = false } = {}) {
     if (subEl) subEl.textContent = s.sub;
     if (idxEl) idxEl.textContent =
       `${String(i + 1).padStart(2, "0")} / ${String(HERO.length).padStart(2, "0")}`;
+    if (numEl) {
+      numEl.textContent = String(i + 1).padStart(2, "0");
+      if (!reduced) {
+        numEl.classList.remove("tick");
+        void numEl.offsetWidth;
+        numEl.classList.add("tick");
+      }
+    }
   };
   setShot(0);
+
+  /* pointer tilt — the stage leans toward the cursor like a turntable */
+  let tx = 0, ty = 0, ttx = 0, tty = 0;
+  const tilting = !reduced && matchMedia("(pointer:fine)").matches;
+  if (tilting) {
+    const pin = section.querySelector(".rig__pin") || section;
+    pin.addEventListener("pointermove", (e) => {
+      ttx = (e.clientX / innerWidth - 0.5) * 2;    // -1..1
+      tty = (e.clientY / innerHeight - 0.5) * 2;
+    }, { passive: true });
+    pin.addEventListener("pointerleave", () => { ttx = 0; tty = 0; });
+  }
+
+  /* scan sweep fires when the display crosses into or out of the blueprint */
+  let lastBp = 0;
+  const maybeScan = (bp) => {
+    if (!scanEl || reduced) { lastBp = bp; return; }
+    if ((lastBp < 0.5 && bp >= 0.5) || (lastBp > 0.5 && bp <= 0.5)) {
+      scanEl.classList.remove("go");
+      void scanEl.offsetWidth;
+      scanEl.classList.add("go");
+    }
+    lastBp = bp;
+  };
 
   /* ── blueprint overlay (optional) ─────────────────────────────────────── */
   let blueprint = null;
@@ -125,6 +160,17 @@ export function initRig({ reduced = false } = {}) {
     // Blueprint takes the stage mid-scroll; photography dips out behind it.
     const bp = Math.sin(clamp(seg(p, TEARDOWN_IN, TEARDOWN_OUT)) * Math.PI);
     const photoAlpha = 1 - bp * 0.92;
+    maybeScan(bp);
+
+    // stage tilt follows the pointer
+    if (tilting) {
+      tx = lerp(tx, ttx, 0.06);
+      ty = lerp(ty, tty, 0.06);
+      const t3d = `translate(-50%,-50%) rotateX(${(ty * -2.2).toFixed(3)}deg)`
+                + ` rotateY(${(tx * 2.6).toFixed(3)}deg)`;
+      stage.style.transform = t3d;
+      if (canvasEl && !canvasEl.hidden) canvasEl.style.transform = t3d;
+    }
 
     shots.forEach((el, i) => {
       let a = 0;

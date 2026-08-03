@@ -144,6 +144,7 @@ index.html              the whole page
 styles/main.css         all styling
 styles/fonts.css        self-hosted @font-face (generated)
 scripts/main.js         site runtime — rendering, filters, lightbox
+scripts/fx.js           interaction layer — cursor, odometers, kinetic strips
 scripts/rig.js          the pinned scroll display
 scripts/bike3d.js       procedural 3D Sur-Ron (drawn as a wireframe)
 scripts/live.js         optional live YouTube stats polling
@@ -164,6 +165,15 @@ assets/vendor/          Three.js
 `harvest_frames.py` to regenerate it.
 
 ---
+
+## The interaction layer
+
+`scripts/fx.js` carries the detail work: a custom cursor (fine pointers only)
+that becomes a PLAY/VIEW ring over media, rolling odometer digits on every big
+number, kinetic type strips whose speed and skew follow scroll velocity,
+scrollspy on the nav, and hero parallax. All of it is skipped under
+`prefers-reduced-motion`, and if the module fails to load the page renders
+its plain static state.
 
 ## Notes
 

@@ -6,6 +6,7 @@
 <title>Operator Surron | Sur-Ron builds, reviews and rides</title>
 <meta name="description" content="Operator Surron builds and rides a purple Sur-Ron Light Bee X. 223 videos, 1.36 million views. Open to sponsorship.">
 <meta name="theme-color" content="#000000">
+<meta name="color-scheme" content="dark">
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="OPERATOR SURRON">
@@ -14,12 +15,16 @@
 <meta name="twitter:card" content="summary_large_image">
 
 <link rel="icon" href="assets/brand/avatar.jpg">
+<link rel="preload" href="assets/fonts/f02.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/f04.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/hero/h05.jpg" as="image">
 <link rel="stylesheet" href="styles/fonts.css">
 <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
 
 <!-- ── texture layers ───────────────────────────────────────────────────── -->
+<div class="intro" aria-hidden="true"><i></i><i></i><i></i></div>
 <div class="grain" aria-hidden="true"></div>
 
 <a class="skip" href="#main">Skip to content</a>
@@ -92,10 +97,10 @@
 
   <!-- HUD telemetry -->
   <aside class="hud" aria-label="Channel at a glance">
-    <div class="hud__row"><span>PACK</span><b data-count="72" data-suffix="V">0V</b></div>
-    <div class="hud__row"><span>PEAK</span><b data-count="19000" data-suffix="W">0W</b></div>
-    <div class="hud__row"><span>SUBS</span><b>4.81<i>K</i></b></div>
-    <div class="hud__row"><span>VIEWS</span><b>1.36<i>M</i></b></div>
+    <div class="hud__row"><span>PACK</span><b>72V</b></div>
+    <div class="hud__row"><span>PEAK</span><b>19,000W</b></div>
+    <div class="hud__row"><span>SUBS</span><b>4.81K</b></div>
+    <div class="hud__row"><span>VIEWS</span><b>1.36M</b></div>
   </aside>
 
 </section>
@@ -117,6 +122,7 @@
     <canvas class="rig__canvas" id="rigCanvas"></canvas>
     <div class="rig__vignette" aria-hidden="true"></div>
     <div class="rig__weave" aria-hidden="true"></div>
+    <div class="rig__num" id="rigNum" aria-hidden="true">01</div>
 
     <div class="rig__ui">
       <div class="rig__uiwrap">
@@ -150,15 +156,25 @@
       <span class="rig__ph"><i></i>Ride</span>
     </div>
 
+    <div class="rig__scan" id="rigScan" aria-hidden="true"></div>
     <div class="rig__prog" aria-hidden="true"><i id="rigProg"></i></div>
     <p class="rig__hint" id="rigHint" aria-hidden="true">Scroll</p>
   </div>
 </section>
 
+<!-- kinetic spec strip -->
+<div class="strip" aria-hidden="true">
+  <div class="strip__track">
+    <span>SUR-RON LIGHT BEE X</span><i></i><span class="strip__v">72V</span><i></i>
+    <span>19,000W PEAK</span><i></i><span class="strip__v">EBMX 9000</span><i></i>
+    <span>POWDER COAT</span><i></i><span class="strip__v">FORGED CARBON</span><i></i>
+  </div>
+</div>
+
 <!-- ══ GARAGE ═════════════════════════════════════════════════════════════ -->
 <section class="sect" id="garage">
   <div class="wrap">
-    <header class="sect__head">
+    <header class="sect__head" data-ghost="02">
       <p class="kicker"><i>02</i>The Machine</p>
       <h2 class="sect__title">THE BIKE</h2>
       <p class="sect__sub">One bike, built up from a bare frame.</p>
@@ -170,7 +186,7 @@
 <!-- ══ VIDEOS ═════════════════════════════════════════════════════════════ -->
 <section class="sect sect--alt" id="videos">
   <div class="wrap">
-    <header class="sect__head">
+    <header class="sect__head" data-ghost="03">
       <p class="kicker"><i>03</i>The Work</p>
       <h2 class="sect__title">EVERY VIDEO</h2>
       <p class="sect__sub">All 21 long videos from the channel.</p>
@@ -204,7 +220,7 @@
 <!-- ══ GALLERY ════════════════════════════════════════════════════════════ -->
 <section class="sect" id="gallery">
   <div class="wrap">
-    <header class="sect__head sect__head--row">
+    <header class="sect__head sect__head--row" data-ghost="05">
       <div>
         <p class="kicker"><i>05</i>Photography</p>
         <h2 class="sect__title">STILLS</h2>
@@ -220,7 +236,7 @@
 <!-- ══ KIT ════════════════════════════════════════════════════════════════ -->
 <section class="sect sect--alt" id="kit">
   <div class="wrap">
-    <header class="sect__head">
+    <header class="sect__head" data-ghost="06">
       <p class="kicker"><i>06</i>Loadout</p>
       <h2 class="sect__title">THE KIT</h2>
       <p class="sect__sub">What I wear and what I film with.</p>
@@ -267,12 +283,20 @@
   </div>
 </section>
 
+<!-- kinetic channel strip -->
+<div class="strip" aria-hidden="true">
+  <div class="strip__track">
+    <span class="strip__v">1.36M VIEWS</span><i></i><span>223 VIDEOS</span><i></i>
+    <span class="strip__v">4.81K SUBSCRIBERS</span><i></i><span>SINCE MARCH 2025</span><i></i>
+  </div>
+</div>
+
 <!-- ══ PARTNER ════════════════════════════════════════════════════════════ -->
 <section class="sect partner" id="partner">
   <div class="hazard" aria-hidden="true"></div>
 
   <div class="wrap">
-    <header class="sect__head">
+    <header class="sect__head" data-ghost="08">
       <p class="kicker"><i>08</i>Business</p>
       <h2 class="sect__title">WORK WITH ME</h2>
       <p class="sect__sub">
@@ -354,6 +378,9 @@
 
 <!-- ══ FOOTER ═════════════════════════════════════════════════════════════ -->
 <footer class="foot">
+  <a class="foot__giant" href="#top" aria-label="Back to top">
+    <span>OPERATOR</span> <span>SURRON</span>
+  </a>
   <div class="wrap foot__in">
     <div class="foot__brand">
       <p class="foot__logo">OPERATOR<b>SURRON</b></p>
