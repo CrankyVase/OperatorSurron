@@ -1,0 +1,10 @@
+# Raw frame harvest — 68MB of source stills, fully reproducible with
+#   python3 scripts/harvest_frames.py
+# The curated subset the site actually ships lives in assets/gallery/.
+assets/frames/
+
+.DS_Store
+Thumbs.db
+__pycache__/
+*.pyc
+node_modules/

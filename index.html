@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>OPERATOR SURRON — Electric Dirt Bikes, Built Hard</title>
+<meta name="description" content="Sur-Ron builds, e-bike reviews and rides from @OperatorSurron. 223 videos, 1.36M views. Sponsorship and partnership enquiries welcome.">
+<meta name="theme-color" content="#000000">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="OPERATOR SURRON">
+<meta property="og:description" content="Electric dirt bikes, over-built and ridden hard. Builds, reviews, and rides.">
+<meta property="og:image" content="assets/brand/banner.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="assets/brand/avatar.jpg">
+<link rel="stylesheet" href="styles/fonts.css">
+<link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+
+<!-- ── boot overlay ─────────────────────────────────────────────────────── -->
+<div class="boot" id="boot" aria-hidden="true">
+  <div class="boot__inner">
+    <div class="boot__bar"><i></i></div>
+    <div class="boot__txt">
+      <span data-boot="0">ARMING SYSTEM</span>
+      <span data-boot="1">72V — PACK LIVE</span>
+      <span data-boot="2">19,000W AVAILABLE</span>
+      <span data-boot="3">OPERATOR ONLINE</span>
+    </div>
+  </div>
+</div>
+
+<!-- ── texture layers ───────────────────────────────────────────────────── -->
+<div class="grain" aria-hidden="true"></div>
+<div class="scan" aria-hidden="true"></div>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- ── nav ──────────────────────────────────────────────────────────────── -->
+<header class="nav" id="nav">
+  <a class="nav__mark" href="#top" aria-label="Operator Surron — home">
+    <span class="nav__bolt" aria-hidden="true">⚡</span>
+    <span class="nav__name">OPERATOR<b>SURRON</b></span>
+  </a>
+
+  <nav class="nav__links" aria-label="Primary">
+    <a href="#garage">Garage</a>
+    <a href="#videos">Videos</a>
+    <a href="#gallery">Stills</a>
+    <a href="#kit">Kit</a>
+    <a href="#operator">Operator</a>
+  </nav>
+
+  <a class="btn btn--hazard nav__cta" href="#partner">
+    <span>Sponsor Me</span>
+  </a>
+
+  <button class="nav__burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
+    <i></i><i></i><i></i>
+  </button>
+</header>
+
+<div class="drawer" id="drawer" hidden>
+  <a href="#garage">Garage</a>
+  <a href="#videos">Videos</a>
+  <a href="#shorts">Shorts</a>
+  <a href="#gallery">Stills</a>
+  <a href="#kit">Kit</a>
+  <a href="#operator">Operator</a>
+  <a href="#partner" class="drawer__cta">Sponsor Me</a>
+</div>
+
+<main id="main">
+<span id="top"></span>
+
+<!-- ══ HERO ═══════════════════════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero__bg" aria-hidden="true">
+    <img src="assets/brand/banner.jpg" alt="" fetchpriority="high">
+    <div class="hero__wash"></div>
+  </div>
+
+  <div class="hero__grid" aria-hidden="true"></div>
+
+  <div class="hero__body">
+    <p class="eyebrow">
+      <i class="dot"></i> CH. <span>UCwRWz4</span> — <span id="heroLoc">UNITED STATES</span> — EST. MAR 2025
+    </p>
+
+    <h1 class="hero__title">
+      <span class="hero__l1">OPERATOR</span>
+      <span class="hero__l2" data-text="SURRON">SURRON</span>
+    </h1>
+
+    <p class="hero__lede">
+      Electric dirt bikes, over-built and ridden hard. Ten-thousand-dollar
+      Sur-Ron builds, honest reviews, and the occasional run-in with the law.
+    </p>
+
+    <div class="hero__acts">
+      <a class="btn btn--solid" href="https://www.youtube.com/@OperatorSurron?sub_confirmation=1" target="_blank" rel="noopener">
+        <span>Subscribe</span>
+      </a>
+      <a class="btn btn--ghost" href="#partner"><span>Work With Me</span></a>
+    </div>
+  </div>
+
+  <!-- HUD telemetry -->
+  <aside class="hud" aria-label="Channel telemetry">
+    <div class="hud__row"><span>PACK</span><b data-count="72" data-suffix="V">0V</b></div>
+    <div class="hud__row"><span>PEAK</span><b data-count="19000" data-suffix="W">0W</b></div>
+    <div class="hud__row"><span>SUBS</span><b>4.81<i>K</i></b></div>
+    <div class="hud__row"><span>VIEWS</span><b>1.36<i>M</i></b></div>
+    <div class="hud__meter"><i style="--p:.86"></i></div>
+    <p class="hud__note">STATUS <b>ARMED</b></p>
+  </aside>
+
+  <div class="hero__scroll" aria-hidden="true"><span>SCROLL</span><i></i></div>
+</section>
+
+<!-- ══ TICKER ═════════════════════════════════════════════════════════════ -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker__track" id="tickerTrack"></div>
+</div>
+
+<!-- ══ STATS ══════════════════════════════════════════════════════════════ -->
+<section class="stats" id="stats">
+  <div class="wrap stats__grid" id="statsGrid"></div>
+</section>
+
+<!-- ══ THE RIG — scroll-driven 3D bike ════════════════════════════════════ -->
+<section class="rig" id="rig">
+  <div class="rig__pin">
+    <canvas class="rig__canvas" id="rigCanvas"></canvas>
+
+    <div class="rig__vignette" aria-hidden="true"></div>
+
+    <div class="rig__ui">
+      <div class="wrap rig__uiwrap">
+        <p class="kicker"><i>//</i> 01 — THE RIG</p>
+        <h2 class="rig__title" id="rigTitle">THE <em>PURPLE ONE</em></h2>
+        <p class="rig__copy" id="rigCopy">
+          Sur-Ron Light Bee X. Built from the frame up.
+        </p>
+      </div>
+    </div>
+
+    <div class="rig__spec" id="rigSpec" aria-hidden="true">
+      <div class="rig__specrow"><span>MODEL</span><b>LIGHT BEE X</b></div>
+      <div class="rig__specrow"><span>PACK</span><b>72V</b></div>
+      <div class="rig__specrow"><span>PEAK</span><b>19,000W</b></div>
+      <div class="rig__specrow"><span>CTRL</span><b>EBMX 9000</b></div>
+      <div class="rig__specrow"><span>BUILD</span><b>$10,000</b></div>
+    </div>
+
+    <div class="rig__prog" aria-hidden="true">
+      <i id="rigProg"></i>
+    </div>
+    <p class="rig__hint" id="rigHint" aria-hidden="true">SCROLL TO ORBIT</p>
+    <p class="rig__fallback" id="rigFallback" hidden>
+      3D view unavailable — see the photo gallery below.
+    </p>
+  </div>
+</section>
+
+<!-- ══ GARAGE ═════════════════════════════════════════════════════════════ -->
+<section class="sect" id="garage">
+  <div class="wrap">
+    <header class="sect__head">
+      <p class="kicker"><i>//</i> 02 — THE MACHINES</p>
+      <h2 class="sect__title">THE <em>GARAGE</em></h2>
+      <p class="sect__sub">Three bikes. One of them is famous.</p>
+    </header>
+    <div class="garage" id="garageGrid"></div>
+  </div>
+</section>
+
+<!-- ══ VIDEOS ═════════════════════════════════════════════════════════════ -->
+<section class="sect sect--alt" id="videos">
+  <div class="wrap">
+    <header class="sect__head">
+      <p class="kicker"><i>//</i> 03 — THE WORK</p>
+      <h2 class="sect__title">BROAD<em>CAST</em></h2>
+      <p class="sect__sub">Every long-form video, straight from the channel.</p>
+    </header>
+
+    <div class="filters" role="tablist" aria-label="Filter videos" id="filters"></div>
+    <div class="vids" id="vidGrid"></div>
+
+    <div class="sect__more">
+      <a class="btn btn--ghost" href="https://www.youtube.com/@OperatorSurron/videos" target="_blank" rel="noopener">
+        <span>All 223 On YouTube</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SHORTS ═════════════════════════════════════════════════════════════ -->
+<section class="sect sect--tight" id="shorts">
+  <div class="wrap">
+    <header class="sect__head sect__head--row">
+      <div>
+        <p class="kicker"><i>//</i> 04 — VERTICAL</p>
+        <h2 class="sect__title">SH<em>ORTS</em></h2>
+      </div>
+      <p class="sect__sub sect__sub--right">200+ deep. This is where the volume lives.</p>
+    </header>
+  </div>
+  <div class="rail" id="shortsRail"></div>
+</section>
+
+<!-- ══ GALLERY ════════════════════════════════════════════════════════════ -->
+<section class="sect" id="gallery">
+  <div class="wrap">
+    <header class="sect__head sect__head--row">
+      <div>
+        <p class="kicker"><i>//</i> 05 — STILLS</p>
+        <h2 class="sect__title">THE <em>PURPLE</em></h2>
+      </div>
+      <p class="sect__sub sect__sub--right">
+        Every frame pulled straight from the channel.
+      </p>
+    </header>
+    <div class="gal" id="galGrid"></div>
+  </div>
+</section>
+
+<!-- ══ KIT ════════════════════════════════════════════════════════════════ -->
+<section class="sect sect--alt" id="kit">
+  <div class="wrap">
+    <header class="sect__head">
+      <p class="kicker"><i>//</i> 06 — LOADOUT</p>
+      <h2 class="sect__title">THE <em>KIT</em></h2>
+      <p class="sect__sub">What I wear, what I run, what I film with.</p>
+    </header>
+    <div class="kit" id="kitGrid"></div>
+  </div>
+</section>
+
+<!-- ══ OPERATOR ═══════════════════════════════════════════════════════════ -->
+<section class="sect" id="operator">
+  <div class="wrap op">
+    <div class="op__media">
+      <div class="op__frame">
+        <img src="assets/brand/avatar.jpg" alt="Operator Surron mid-wheelie on the purple Sur-Ron" loading="lazy">
+      </div>
+      <p class="op__cap">FIG. 01 — NO FACE. NEVER HAS BEEN.</p>
+    </div>
+
+    <div class="op__body">
+      <p class="kicker"><i>//</i> 07 — WHO</p>
+      <h2 class="sect__title">THE <em>OPERATOR</em></h2>
+      <p class="op__lead">
+        Helmet on, visor down, purple Sur-Ron underneath. That's the whole
+        brand — and it's deliberate. Nobody's here for my face.
+      </p>
+      <p>
+        I started in March 2025 with an unboxing and a bad camera. Since then
+        it's been 223 videos: a $10,000 Sur-Ron built from the frame up, a
+        72V pack pushing 19,000 watts, a $5,000 street build, a secret dirt
+        track cut by hand, and a Texas mega-ride that ended with crashes and
+        cops. Along the way, 1.36 million views.
+      </p>
+      <p>
+        The channel works because I ride the things I talk about. If a bike
+        is slow, it gets called slow. If a part fails, the failure makes the
+        cut. That's the only reason anyone trusts the review — and it's the
+        reason a brand should want to be on it.
+      </p>
+      <ul class="op__facts">
+        <li><span>BASED</span><b>United States</b></li>
+        <li><span>RIDING</span><b>Sur-Ron / Rixoc / Super73</b></li>
+        <li><span>SINCE</span><b>March 2025</b></li>
+        <li><span>FACE</span><b>Classified</b></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PARTNER ════════════════════════════════════════════════════════════ -->
+<section class="sect partner" id="partner">
+  <div class="hazard" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <header class="sect__head">
+      <p class="kicker kicker--yellow"><i>//</i> 08 — BUSINESS</p>
+      <h2 class="sect__title">WORK <em>WITH ME</em></h2>
+      <p class="sect__sub">
+        Bikes, parts, gear, apparel. If it belongs on an electric dirt bike,
+        I'll test it properly and say what I actually think.
+      </p>
+    </header>
+
+    <!-- media kit numbers -->
+    <div class="kitnum" id="mediaKit"></div>
+
+    <!-- brands -->
+    <div class="brands">
+      <p class="brands__lab">FEATURED ON THE CHANNEL</p>
+      <div class="brands__marq"><div class="brands__track" id="brandTrack"></div></div>
+    </div>
+
+    <!-- packages -->
+    <div class="packs" id="packGrid"></div>
+
+    <!-- contact -->
+    <div class="contact" id="contact">
+      <div class="contact__intro">
+        <h3>SEND IT.</h3>
+        <p>
+          Fill this in and it opens a pre-written email in your mail app —
+          no forms disappearing into a void. Or write to me directly:
+        </p>
+        <a class="contact__mail" href="mailto:OperatorSurron@gmail.com">
+          OperatorSurron@gmail.com
+        </a>
+        <button class="copy" id="copyMail" type="button" data-mail="OperatorSurron@gmail.com">
+          <span>Copy address</span>
+        </button>
+        <p class="contact__resp"><i class="dot"></i> Usually replies within a few days.</p>
+      </div>
+
+      <form class="form" id="sponsorForm" novalidate>
+        <div class="form__row">
+          <label class="fld">
+            <span>Brand / Company</span>
+            <input type="text" name="brand" required placeholder="Rixoc, EBMX, your company…">
+          </label>
+          <label class="fld">
+            <span>Your Name</span>
+            <input type="text" name="name" required placeholder="Who am I talking to?">
+          </label>
+        </div>
+
+        <div class="form__row">
+          <label class="fld">
+            <span>Email</span>
+            <input type="email" name="email" required placeholder="you@brand.com">
+          </label>
+          <label class="fld">
+            <span>Interested In</span>
+            <select name="type" id="enquiryType"></select>
+          </label>
+        </div>
+
+        <label class="fld">
+          <span>Product / Budget <i>(optional)</i></span>
+          <input type="text" name="budget" placeholder="What's the product, and what's the budget range?">
+        </label>
+
+        <label class="fld">
+          <span>Details</span>
+          <textarea name="message" rows="5" required placeholder="What are you sending, what do you want covered, and when do you need it live?"></textarea>
+        </label>
+
+        <button class="btn btn--hazard btn--big" type="submit"><span>Open Email &rarr;</span></button>
+        <p class="form__note" id="formNote" role="status"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ══ FOOTER ═════════════════════════════════════════════════════════════ -->
+<footer class="foot">
+  <div class="wrap foot__in">
+    <div class="foot__brand">
+      <p class="foot__logo">OPERATOR<b>SURRON</b></p>
+      <p class="foot__tag">Electric dirt bikes, over-built and ridden hard.</p>
+    </div>
+    <nav class="foot__links" aria-label="Footer">
+      <a href="https://www.youtube.com/@OperatorSurron" target="_blank" rel="noopener">YouTube</a>
+      <a href="mailto:OperatorSurron@gmail.com">Email</a>
+      <a href="#partner">Sponsorship</a>
+      <a href="#top">Back to top</a>
+    </nav>
+  </div>
+  <p class="foot__fine">
+    © <span id="yr"></span> Operator Surron — Stats current as of Aug 2026.
+  </p>
+</footer>
+
+<!-- ══ LIGHTBOX ═══════════════════════════════════════════════════════════ -->
+<div class="lb" id="lightbox" hidden>
+  <button class="lb__close" id="lbClose" aria-label="Close video">&times;</button>
+  <div class="lb__stage">
+    <div class="lb__frame" id="lbFrame"></div>
+    <p class="lb__cap" id="lbCap"></p>
+  </div>
+</div>
+
+<script type="module" src="scripts/main.js"></script>
+</body>
+</html>
