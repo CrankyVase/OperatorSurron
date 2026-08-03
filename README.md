@@ -87,6 +87,7 @@ Then update the hard-coded figures in `data/site.js → STATS` and the
 | `harvest_frames.py` | Downloads every real frame YouTube exposes (4 stills per video) |
 | `find_purple.py` | Scores each frame for how much of the violet Sur-Ron paint it contains |
 | `build_gallery.py` | Curates the best purple-bike shots into `assets/gallery/` |
+| `build_hero.py` | Grades the eight-shot reel for the scroll display |
 | `fetch_fonts.py` | Re-downloads the self-hosted webfonts |
 
 `find_purple.py` is hue-matching, so it occasionally flags something that
@@ -142,14 +143,18 @@ subs move in visible steps while views tick continuously.
 index.html              the whole page
 styles/main.css         all styling
 styles/fonts.css        self-hosted @font-face (generated)
-scripts/main.js         site runtime — rendering, filters, lightbox, scroll rig
-scripts/bike3d.js       procedural 3D Sur-Ron
+scripts/main.js         site runtime — rendering, filters, lightbox
+scripts/rig.js          the pinned scroll display
+scripts/bike3d.js       procedural 3D Sur-Ron (drawn as a wireframe)
+scripts/live.js         optional live YouTube stats polling
 data/site.js            ← YOUR CONTENT
 data/channel.js         generated from the YouTube scrape
 data/gallery.js         generated image manifest
+data/hero.js            generated scroll-reel manifest
 assets/thumbs/          video thumbnails
 assets/shorts/          Shorts thumbnails
 assets/gallery/         curated purple-bike stills
+assets/hero/            the graded scroll reel
 assets/brand/           avatar + banner
 assets/fonts/           self-hosted woff2
 assets/vendor/          Three.js
@@ -162,11 +167,14 @@ assets/vendor/          Three.js
 
 ## Notes
 
-- Colours are sampled from the actual bike: the frame paint measures `#785E98`
-  in shade and `#9479B2` lit, which is where the site's violet comes from. The
-  acid yellow is the accent from the fork guards and thumbnail titles.
+- The violet is sampled from the actual bike: the powder-coat measures
+  `#785E98` in shade and `#9479B2` lit. It is the only hue on the site —
+  everything else is black, white and grey.
+- Carbon appears two ways, matching the real bike: a woven 2×2 twill on panel
+  surfaces, and a forged-carbon flake texture (the chopped, marbled kind the
+  helmets are made from) on the stage floor.
 - The sponsor form has no backend. It composes a pre-filled `mailto:` and hands
   off to the visitor's mail app, so there's no server to run and nothing to
   disappear into a void.
 - Video thumbnails and stills are the channel's own content, served locally.
-- Fonts: Big Shoulders Display, Barlow, Azeret Mono — all SIL Open Font License.
+- Fonts: Archivo (variable width + weight) and Azeret Mono, both SIL Open Font License.
