@@ -11,22 +11,22 @@ export const HERO = [
  {
   "src": "assets/hero/h01.jpg",
   "label": "FRONT QUARTER",
-  "sub": "Lights on, ready",
-  "w": 1280,
-  "h": 720,
-  "portrait": false
+  "sub": "Lights on",
+  "w": 898,
+  "h": 1600,
+  "portrait": true
  },
  {
   "src": "assets/hero/h02.jpg",
   "label": "BARE FRAME",
-  "sub": "Powder-coat over cast alloy",
+  "sub": "Powder coat over cast alloy",
   "w": 1280,
   "h": 720,
   "portrait": false
  },
  {
   "src": "assets/hero/h03.jpg",
-  "label": "REAR LINKAGE",
+  "label": "REAR END",
   "sub": "Monoshock and swingarm",
   "w": 900,
   "h": 1600,
@@ -42,26 +42,26 @@ export const HERO = [
  },
  {
   "src": "assets/hero/h05.jpg",
-  "label": "AFTER DARK",
-  "sub": "Where it usually is",
-  "w": 898,
+  "label": "THE PAINT",
+  "sub": "The reason people know it",
+  "w": 900,
   "h": 1600,
   "portrait": true
  },
  {
   "src": "assets/hero/h06.jpg",
+  "label": "THE BAY",
+  "sub": "72V pack sits here",
+  "w": 898,
+  "h": 1600,
+  "portrait": true
+ },
+ {
+  "src": "assets/hero/h07.jpg",
   "label": "THE TRACK",
   "sub": "Cut by hand",
   "w": 640,
   "h": 480,
-  "portrait": false
- },
- {
-  "src": "assets/hero/h07.jpg",
-  "label": "TEXAS",
-  "sub": "Crashes and cops",
-  "w": 1280,
-  "h": 720,
   "portrait": false
  }
 ];

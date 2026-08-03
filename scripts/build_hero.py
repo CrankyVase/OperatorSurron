@@ -17,13 +17,13 @@ OUT = os.path.join(ROOT, "assets", "hero")
 # Ordered as a reel: reveal → detail → stance → action.
 SHOTS = [
     ("S86L3rvOvOE_oar3.jpg",       "SIDE PROFILE",   "Sur-Ron Light Bee X"),
-    ("lC4dG2eFYXE_maxres3.jpg",    "FRONT QUARTER",  "Lights on, ready"),
-    ("BfXaJy-ZVh4_maxres2.jpg",    "BARE FRAME",     "Powder-coat over cast alloy"),
-    ("ZTWO-hh79v8_oar3.jpg",       "REAR LINKAGE",   "Monoshock and swingarm"),
+    ("cxorq8Rowqk_oar2.jpg",       "FRONT QUARTER",  "Lights on"),
+    ("BfXaJy-ZVh4_maxres2.jpg",    "BARE FRAME",     "Powder coat over cast alloy"),
+    ("ZTWO-hh79v8_oar3.jpg",       "REAR END",       "Monoshock and swingarm"),
     ("ArHl1bBvs9o_oar3.jpg",       "STANCE",         "USD forks, knobbies"),
-    ("cxorq8Rowqk_oar2.jpg",       "AFTER DARK",     "Where it usually is"),
+    ("lKJifB3AJxM_oar3.jpg",       "THE PAINT",      "The reason people know it"),
+    ("xk7gcHqFb8o_oar3.jpg",       "THE BAY",        "72V pack sits here"),
     ("mNnhPm2h0WY_sddefault.jpg",  "THE TRACK",      "Cut by hand"),
-    ("4ttQ8LM63a0_maxresdefault.jpg", "TEXAS",       "Crashes and cops"),
 ]
 
 W = 1600            # output long edge
@@ -37,7 +37,7 @@ def grade(im):
 
     # luminance, then pull most of the way to mono (keeps a whisper of the paint)
     lum = a @ np.array([0.2126, 0.7152, 0.0722], dtype=np.float32)
-    a = a * 0.22 + lum[..., None] * 0.78
+    a = a * 0.58 + lum[..., None] * 0.42
 
     # filmic-ish contrast: lift toe, crush shadows, roll highlights
     a = np.clip(a, 0, 1)
@@ -47,7 +47,7 @@ def grade(im):
 
     # violet into the shadows, cool neutral in the highlights
     shadow_w = np.clip(1.0 - lum[..., None] * 1.7, 0, 1)
-    a = a + shadow_w * (VIOLET - 0.5) * 0.085
+    a = a + shadow_w * (VIOLET - 0.5) * 0.06
     a = np.clip(a, 0, 1)
 
     # vignette

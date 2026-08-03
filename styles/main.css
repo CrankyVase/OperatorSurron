@@ -377,6 +377,16 @@ h1,h2,h3{margin:0;font-family:var(--f-disp);line-height:.9;letter-spacing:-.035e
 
 /* ── garage ──────────────────────────────────────────────────────────────── */
 .garage{display:grid;gap:1.2rem;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+/* A single bike gets a feature layout instead of one stretched card. */
+@media (min-width:820px){
+  .garage:has(> .bike:only-child) .bike{flex-direction:row;align-items:stretch}
+  .garage:has(> .bike:only-child) .bike__img{flex:1 1 54%;aspect-ratio:auto;min-height:420px}
+  .garage:has(> .bike:only-child) .bike__img::after{
+    background:linear-gradient(to right,transparent 55%,var(--panel) 99%)}
+  .garage:has(> .bike:only-child) .bike__body{flex:1 1 46%;justify-content:center;
+    padding:clamp(2rem,3.5vw,3rem)}
+  .garage:has(> .bike:only-child) .bike__name{font-size:clamp(2rem,3.4vw,2.8rem)}
+}
 .bike{position:relative;display:flex;flex-direction:column;background:var(--panel);
   background-image:var(--weave);background-size:var(--weave-size);
   background-position:var(--weave-pos);
@@ -391,7 +401,7 @@ h1,h2,h3{margin:0;font-family:var(--f-disp);line-height:.9;letter-spacing:-.035e
   background:linear-gradient(to top,var(--panel) 1%,transparent 55%)}
 .bike__tag{position:absolute;top:1rem;left:1rem;z-index:2;padding:.34rem .7rem;
   background:rgba(0,0,0,.62);backdrop-filter:blur(8px);border:1px solid var(--line-3);
-  color:var(--white);font:400 .56rem/1 var(--f-mono);letter-spacing:.22em}
+  color:var(--ink-2);font:400 .58rem/1 var(--f-mono);letter-spacing:.14em}
 .bike__body{padding:1.6rem 1.7rem 1.8rem;display:flex;flex-direction:column;flex:1}
 .bike__name{font-size:clamp(1.6rem,2.6vw,2rem);letter-spacing:-.04em;color:var(--white)}
 .bike__model{margin:.5rem 0 1rem;font:400 .64rem/1 var(--f-mono);

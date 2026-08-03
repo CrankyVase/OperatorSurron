@@ -49,7 +49,7 @@ export const STATS = {
 };
 
 /* ---------------------------------------------------------------------------
-   THE GARAGE — your bikes.
+   THE BIKE. One entry is intentional: the site is about this bike.
    `specs` rows are free-form: [label, value]. Add/remove as you like.
    `video` is the YouTube ID of the build video (used for the "watch build" link).
    ------------------------------------------------------------------------- */
@@ -57,50 +57,19 @@ export const GARAGE = [
   {
     name: "The Purple One",
     model: "Sur-Ron Light Bee X",
-    status: "PRIMARY",
+    status: "Main bike",
     blurb:
-      "The bike the channel is built on. Ten grand deep, de-restricted, and " +
-      "wearing the paint everyone recognises before they know the name.",
+      "The bike the whole channel runs on. Around $10,000 of parts on a bare " +
+      "frame, a 72V pack, and an EBMX 9000 controller. I ride it every week.",
     specs: [
       ["Battery", "72V"],
-      ["Peak Output", "19,000W"],
+      ["Peak output", "19,000W"],
       ["Controller", "EBMX 9000"],
-      ["Build Cost", "$10,000"],
-      ["State", "Unclapped"],
+      ["Build cost", "$10,000"],
+      ["Finish", "Powder coat and carbon"],
     ],
     video: "BfXaJy-ZVh4",
-    thumb: "assets/thumbs/TXUDZ30YCbA.jpg",
-  },
-  {
-    name: "Dream Build",
-    model: "Super73-style / OUTS",
-    status: "STREET",
-    blurb:
-      "A five-thousand-dollar street build, done properly — fat tyres, " +
-      "moto bars, and a seat long enough to carry a passenger who regrets it.",
-    specs: [
-      ["Class", "Street / Moped"],
-      ["Build Cost", "$5,000"],
-      ["Tyres", "Fat knobby"],
-      ["Use", "Daily + city"],
-    ],
-    video: "Iq8F5kjKG1A",
-    thumb: "assets/thumbs/Iq8F5kjKG1A.jpg",
-  },
-  {
-    name: "The Successor",
-    model: "Rixoc GT19",
-    status: "TESTING",
-    blurb:
-      "The bike that made me say Sur-Ron is finished. Track-tested, " +
-      "commuted on, and put through everyday life to see if it actually holds up.",
-    specs: [
-      ["Role", "Long-term test"],
-      ["Tested", "Track + street"],
-      ["Verdict", "On the channel"],
-    ],
-    video: "1Kdz5zEyCDk",
-    thumb: "assets/thumbs/JQ5EkSQsy34.jpg",
+    thumb: "assets/hero/h07.jpg",
   },
 ];
 
@@ -111,16 +80,16 @@ export const GARAGE = [
    `link` is optional — leave it as "" and the card won't be clickable.
    ------------------------------------------------------------------------- */
 export const KIT = [
-  { group: "Protection", name: "Full-face MX helmet", detail: "Blacked out. Always on. No face reveal.", link: "" },
-  { group: "Protection", name: "Iridescent goggles",  detail: "Blue/violet mirror lens — the signature.",  link: "" },
-  { group: "Protection", name: "Gloves + knee",       detail: "Because Texas taught me a lesson.",         link: "" },
-  { group: "Power",      name: "EBMX 9000 controller", detail: "Installed and reviewed on the channel.",   link: "" },
-  { group: "Power",      name: "72V battery pack",     detail: "The reason it pulls 19,000W.",             link: "" },
-  { group: "Capture",    name: "Action cam",           detail: "Helmet + chase angles.",                   link: "" },
-  { group: "Capture",    name: "Mirrorless body",      detail: "B-roll, static beauty shots, thumbnails.", link: "" },
-  { group: "Capture",    name: "Drone",                detail: "Trail chases and the wide reveal shots.",  link: "" },
-  { group: "Garage",     name: "Bike stand",           detail: "Every build video starts here.",           link: "" },
-  { group: "Garage",     name: "Torque wrench + bits", detail: "Nothing goes back on guessed.",            link: "" },
+  { group: "Protection", name: "Full-face MX helmet", detail: "Blacked out. On in every video.", link: "" },
+  { group: "Protection", name: "Mirrored goggles",    detail: "Blue lens. Part of the look now.", link: "" },
+  { group: "Protection", name: "Gloves and knee pads", detail: "Learned this one the hard way.", link: "" },
+  { group: "Power",      name: "EBMX 9000 controller", detail: "Fitted and reviewed on the channel.", link: "" },
+  { group: "Power",      name: "72V battery pack",     detail: "Runs the bike to 19,000 watts.", link: "" },
+  { group: "Capture",    name: "Action cam",           detail: "Helmet and chase shots.", link: "" },
+  { group: "Capture",    name: "Mirrorless body",      detail: "B-roll and thumbnails.", link: "" },
+  { group: "Capture",    name: "Drone",                detail: "Trail chases and wide shots.", link: "" },
+  { group: "Garage",     name: "Bike stand",           detail: "Every build video starts here.", link: "" },
+  { group: "Garage",     name: "Torque wrench",        detail: "Nothing goes back on by feel.", link: "" },
 ];
 
 /* Brands that have appeared on the channel — pulled from real video titles.
@@ -136,50 +105,50 @@ export const BRANDS = [
 export const PACKAGES = [
   {
     code: "01",
-    name: "Dedicated Review",
-    lede: "Your bike or part gets the whole video.",
+    name: "Dedicated review",
+    lede: "Your product gets a full video.",
     items: [
-      "5–15 min long-form review",
-      "Real riding, real verdict",
-      "Custom thumbnail + title",
-      "Pinned comment + description links",
-      "Cut-downs for Shorts",
+      "5 to 15 minutes, long form",
+      "Real riding and a straight verdict",
+      "Custom thumbnail and title",
+      "Links in the description, pinned comment",
+      "Short cut-downs for Shorts",
     ],
-    flag: "MOST REQUESTED",
+    flag: "Most requested",
   },
   {
     code: "02",
     name: "Integration",
-    lede: "Woven into a build or ride video.",
+    lede: "A segment inside a build or ride video.",
     items: [
-      "60–90 sec dedicated segment",
-      "Placed inside proven formats",
-      "On-bike product in B-roll",
-      "Link + discount code",
+      "60 to 90 seconds",
+      "Placed in a format with a track record",
+      "Product on the bike through the B-roll",
+      "Link and discount code",
     ],
     flag: "",
   },
   {
     code: "03",
-    name: "Shorts Package",
-    lede: "Where the volume is. 200+ Shorts deep.",
+    name: "Shorts package",
+    lede: "Short form, where most of the views come from.",
     items: [
-      "3–5 vertical Shorts",
-      "Hook-first, algorithm-tuned",
-      "Cross-posted vertical assets",
+      "3 to 5 vertical Shorts",
+      "Written hook first",
+      "Vertical files you keep and reuse",
       "Fastest turnaround",
     ],
-    flag: "BEST VALUE",
+    flag: "Best value",
   },
   {
     code: "04",
-    name: "Long-Term Test",
-    lede: "Months on the bike, not minutes.",
+    name: "Long-term test",
+    lede: "Months of use instead of one afternoon.",
     items: [
-      "Multi-video durability arc",
-      "Honest failure reporting",
-      "Track + street + daily use",
-      "Photo assets you can reuse",
+      "Several videos over time",
+      "I report failures if they happen",
+      "Track, street and daily riding",
+      "Photos you can reuse",
     ],
     flag: "",
   },

@@ -19,16 +19,16 @@ const TEARDOWN_IN = 0.40;
 const TEARDOWN_OUT = 0.62;
 
 const COPY = [
-  { at: 0.00, title: "THE <em>PURPLE ONE</em>",
-    copy: "Sur-Ron Light Bee X. Powder-coated over cast alloy, built from the frame up." },
-  { at: 0.26, title: "EVERY <em>DETAIL</em>",
-    copy: "Ten grand of it. Nothing on this bike is stock and nothing on it was guessed." },
-  { at: TEARDOWN_IN, title: "STRIPPED <em>BACK</em>",
+  { at: 0.00, title: "THE PURPLE ONE",
+    copy: "A Sur-Ron Light Bee X. Powder coat over cast alloy, built up from a bare frame." },
+  { at: 0.26, title: "EVERY PART",
+    copy: "About $10,000 of parts. I picked each one and fitted most of them on camera." },
+  { at: TEARDOWN_IN, title: "STRIPPED BACK",
     copy: "Trellis frame, 72V pack, EBMX 9000 controller, mid-drive motor." },
-  { at: TEARDOWN_OUT, title: "BACK <em>TOGETHER</em>",
-    copy: "De-restricted and put back on the ground. Nineteen thousand watts." },
-  { at: 0.82, title: "WHERE IT <em>LIVES</em>",
-    copy: "Dirt, street, and the occasional conversation with law enforcement." },
+  { at: TEARDOWN_OUT, title: "BACK TOGETHER",
+    copy: "De-restricted and back on the ground. 19,000 watts at peak." },
+  { at: 0.82, title: "WHERE IT LIVES",
+    copy: "Dirt tracks, back roads, and the odd conversation with police." },
 ];
 
 export function initRig({ reduced = false } = {}) {
