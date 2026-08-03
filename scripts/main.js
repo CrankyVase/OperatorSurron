@@ -13,13 +13,6 @@ const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g,
   (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
-/* ── boot ─────────────────────────────────────────────────────────────────── */
-const boot = $("#boot");
-const dismissBoot = () => boot.classList.add("done");
-if (REDUCED) dismissBoot();
-else addEventListener("load", () => setTimeout(dismissBoot, 1500));
-setTimeout(dismissBoot, 3200); // hard failsafe
-
 /* ── nav ──────────────────────────────────────────────────────────────────── */
 const nav = $("#nav");
 const onScrollNav = () => nav.classList.toggle("stuck", scrollY > 60);
@@ -34,17 +27,6 @@ const setDrawer = (open) => {
 };
 burger.addEventListener("click", () => setDrawer(drawer.hidden));
 drawer.addEventListener("click", (e) => { if (e.target.tagName === "A") setDrawer(false); });
-
-/* ── ticker ───────────────────────────────────────────────────────────────── */
-{
-  const bits = [
-    "72V PACK", "19,000W PEAK", "223 VIDEOS", "1.36M VIEWS",
-    "SUR-RON LIGHT BEE X", "$10,000 BUILD", "EBMX 9000", "NO FACE",
-    "BUILDS · REVIEWS · RIDES", "SPONSORS WELCOME",
-  ];
-  const half = bits.map((b) => `<span>${esc(b)}</span>`).join("");
-  $("#tickerTrack").innerHTML = half + half; // duplicated for a seamless -50% loop
-}
 
 /* ── stats ────────────────────────────────────────────────────────────────── */
 {
