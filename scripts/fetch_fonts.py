@@ -14,9 +14,10 @@ CSS_OUT = os.path.join(ROOT, "styles", "fonts.css")
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
 
+# Archivo is variable on both width and weight — the expanded cuts carry the
+# display type, the normal width carries body copy. One family, one voice.
 URL = ("https://fonts.googleapis.com/css2"
-       "?family=Big+Shoulders+Display:wght@400;600;800;900"
-       "&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400"
+       "?family=Archivo:wdth,wght@62..125,300..900"
        "&family=Azeret+Mono:wght@300;400;500;700"
        "&display=swap")
 

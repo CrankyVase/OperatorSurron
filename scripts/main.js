@@ -327,162 +327,59 @@ $("#kitGrid").innerHTML = KIT.map((k) => {
 /* ── year ─────────────────────────────────────────────────────────────────── */
 $("#yr").textContent = new Date().getFullYear();
 
-/* ══ THE RIG — scroll-driven 3D bike ═══════════════════════════════════════ */
-initRig();
+/* ══ THE RIG — real photography + blueprint overlay ════════════════════════ */
+import("./rig.js")
+  .then((m) => m.initRig({ reduced: REDUCED }))
+  .catch((e) => console.warn("[rig] unavailable:", e));
 
-async function initRig() {
-  const section = $("#rig");
-  const canvas = $("#rigCanvas");
-  const fallback = $("#rigFallback");
+/* ══ LIVE CHANNEL STATS ════════════════════════════════════════════════════ */
+import("./live.js")
+  .then((m) => m.initLive({ onUpdate: applyLiveStats }))
+  .catch((e) => console.warn("[live] unavailable:", e));
 
-  let THREE, bike;
-  try {
-    THREE = await import("../assets/vendor/three.module.min.js");
-    bike = await import("./bike3d.js");
-    if (typeof bike.createSurRon !== "function") throw new Error("createSurRon missing");
-  } catch (err) {
-    console.warn("[rig] 3D unavailable:", err);
-    canvas.hidden = true;
-    fallback.hidden = false;
-    $("#rigHint").hidden = true;
-    section.style.height = "100svh";
-    return;
-  }
+/**
+ * Re-render the stat tiles from a fresh reading, animating anything that grew.
+ * `deltas` maps a stat key to how much it moved since the last poll.
+ */
+function applyLiveStats(next, deltas) {
+  const map = { subs: 0, views: 1, videos: 2 };
+  Object.entries(map).forEach(([key, i]) => {
+    if (next[key] == null) return;
+    const tile = $$(".stat")[i];
+    if (!tile) return;
+    const b = tile.querySelector("b");
+    b.dataset.count = String(next[key]);
+    b.dataset.display = compact(next[key]);
+    const m = compact(next[key]).match(/^([\d.,]+)([A-Z]?)$/);
+    b.innerHTML = `${m[1]}<i>${m[2] || ""}</i>`;
 
-  const renderer = new THREE.WebGLRenderer({
-    canvas, antialias: true, alpha: true, powerPreference: "high-performance",
-  });
-  renderer.setClearColor(0x000000, 0);
-  renderer.shadowMap.enabled = false;
-  if ("outputColorSpace" in renderer) renderer.outputColorSpace = THREE.SRGBColorSpace;
-  if ("toneMapping" in renderer) {
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.15;
-  }
-
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
-  bike.addStudioLights?.(scene);
-
-  const { group, parts } = bike.createSurRon();
-  scene.add(group);
-
-  // Ground shadow-ish disc so the bike doesn't float in a void.
-  const disc = new THREE.Mesh(
-    new THREE.CircleGeometry(1.9, 48).rotateX(-Math.PI / 2),
-    new THREE.MeshBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.55 })
-  );
-  disc.position.y = 0.002;
-  scene.add(disc);
-
-  const resize = () => {
-    const w = canvas.clientWidth || innerWidth;
-    const h = canvas.clientHeight || innerHeight;
-    renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-    renderer.setSize(w, h, false);
-    camera.aspect = w / h;
-    camera.updateProjectionMatrix();
-  };
-  addEventListener("resize", resize);
-  resize();
-
-  // Cache each part's rest position so the exploded view can lerp from it.
-  const rest = new Map();
-  Object.values(parts).forEach((p) => {
-    if (p?.isObject3D) rest.set(p, p.position.clone());
-  });
-
-  /* Choreography ---------------------------------------------------------- */
-  const COPY = [
-    { at: 0.00, title: "THE <em>PURPLE ONE</em>", copy: "Sur-Ron Light Bee X. Built from the frame up, painted the colour everyone recognises before they know the name." },
-    { at: 0.32, title: "EVERY <em>PART</em>", copy: "Ten grand of it. Trellis frame, 72V pack, EBMX 9000 controller, mid-drive motor — chosen one piece at a time." },
-    { at: 0.64, title: "19,000 <em>WATTS</em>", copy: "Bolted back together and de-restricted. Enough power to loop it if you're careless with the throttle." },
-    { at: 0.86, title: "READY WHEN <em>YOU ARE</em>", copy: "This is the bike behind 223 videos and 1.36 million views." },
-  ];
-  const specRows = $$(".rig__specrow");
-  const titleEl = $("#rigTitle"), copyEl = $("#rigCopy");
-  const progEl = $("#rigProg"), hintEl = $("#rigHint");
-  let copyIdx = -1;
-
-  const setCopy = (i) => {
-    if (i === copyIdx) return;
-    copyIdx = i;
-    titleEl.classList.add("swap"); copyEl.classList.add("swap");
-    setTimeout(() => {
-      titleEl.innerHTML = COPY[i].title;
-      copyEl.textContent = COPY[i].copy;
-      titleEl.classList.remove("swap"); copyEl.classList.remove("swap");
-    }, REDUCED ? 0 : 220);
-  };
-  setCopy(0);
-
-  let progress = 0, visible = false;
-  const io = new IntersectionObserver(([e]) => { visible = e.isIntersecting; }, { threshold: 0 });
-  io.observe(section);
-
-  const readScroll = () => {
-    const r = section.getBoundingClientRect();
-    const total = r.height - innerHeight;
-    progress = total > 0 ? clamp(-r.top / total) : 0;
-  };
-  addEventListener("scroll", readScroll, { passive: true });
-  readScroll();
-
-  const lerp = (a, b, t) => a + (b - a) * t;
-  const smooth = (t) => t * t * (3 - 2 * t);
-  // Maps p from [a,b] onto [0,1], clamped.
-  const seg = (p, a, b) => clamp((p - a) / (b - a));
-
-  let shown = 0;              // eased progress actually rendered
-  let spin = 0;               // accumulated wheel rotation
-
-  const frameLoop = () => {
-    requestAnimationFrame(frameLoop);
-    if (!visible) return;
-
-    shown = REDUCED ? progress : lerp(shown, progress, 0.09);
-    const p = shown;
-
-    // ── camera orbit ────────────────────────────────────────────────────
-    // front three-quarter → side → low hero → raised orbit
-    const az = lerp(-0.55, Math.PI * 1.75, smooth(p));
-    const radius = lerp(3.35, 2.55, smooth(seg(p, 0, 0.7)))
-                 + Math.sin(p * Math.PI) * 0.35;
-    const height = lerp(0.85, 1.25, smooth(seg(p, 0.55, 1)))
-                 - Math.sin(seg(p, 0, 0.5) * Math.PI) * 0.35;
-    camera.position.set(Math.cos(az) * radius, Math.max(0.18, height), Math.sin(az) * radius);
-    camera.lookAt(0, 0.52, 0);
-
-    // ── exploded view (phase B) ─────────────────────────────────────────
-    const ex = Math.sin(seg(p, 0.28, 0.66) * Math.PI); // 0 → 1 → 0
-    rest.forEach((home, part) => {
-      const dir = part.userData?.explode;
-      if (!dir) return;
-      part.position.set(
-        home.x + dir.x * ex,
-        home.y + dir.y * ex,
-        home.z + dir.z * ex
-      );
-    });
-
-    // ── wheels roll while the camera sweeps ─────────────────────────────
-    if (!REDUCED) {
-      spin += 0.012 + (1 - ex) * 0.03;
-      if (parts.frontWheel) parts.frontWheel.rotation.z = -spin;
-      if (parts.rearWheel) parts.rearWheel.rotation.z = -spin;
+    const grew = deltas?.[key] > 0;
+    if (!grew) return;
+    tile.classList.remove("bump");
+    void tile.offsetWidth;            // restart the animation
+    tile.classList.add("bump");
+    let chip = tile.querySelector(".stat__delta");
+    if (!chip) {
+      chip = document.createElement("span");
+      chip.className = "stat__delta";
+      tile.appendChild(chip);
     }
+    chip.textContent = `+${deltas[key].toLocaleString("en-US")}`;
+    chip.classList.remove("on");
+    void chip.offsetWidth;
+    chip.classList.add("on");
+  });
 
-    // ── UI ──────────────────────────────────────────────────────────────
-    progEl.style.height = `${p * 100}%`;
-    hintEl.classList.toggle("gone", p > 0.04);
-    specRows.forEach((row, i) => {
-      row.classList.toggle("on", p > 0.30 + i * 0.055);
-    });
-    let idx = 0;
-    for (let i = 0; i < COPY.length; i++) if (p >= COPY[i].at) idx = i;
-    setCopy(idx);
+  const live = $("#statsLive");
+  if (live) {
+    live.dataset.state = "on";
+    live.querySelector("span").textContent = "Live · updated just now";
+  }
+}
 
-    renderer.render(scene, camera);
-  };
-  frameLoop();
+/** 1357836 -> "1.36M", 4810 -> "4.81K" */
+function compact(n) {
+  if (n >= 1e6) return (n / 1e6).toFixed(2).replace(/\.?0+$/, "") + "M";
+  if (n >= 1e3) return (n / 1e3).toFixed(2).replace(/\.?0+$/, "") + "K";
+  return String(n);
 }

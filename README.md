@@ -95,18 +95,46 @@ add a video id there to banish a bad shot.
 
 ---
 
-## The 3D bike
+## The scroll display ("THE RIG")
 
-`scripts/bike3d.js` is a procedural Sur-Ron Light Bee X modelled in Three.js
-from photo reference, in the bike's real colours. The "THE RIG" section pins it
-to the screen and scrolls through an orbit, an exploded view, and a reassembly.
+The pinned section is driven by real photography, not a 3D render — eight
+frames pulled from your own videos and graded to a common look so they hold
+and dissolve like one continuous piece. Hand-coded 3D can't out-shoot a real
+camera, so it isn't asked to.
 
-If the module fails to load for any reason the section degrades to a short
-notice and the rest of the page is unaffected.
+What the 3D *does* do is the teardown beat in the middle: `scripts/bike3d.js`
+is a procedurally-modelled Sur-Ron Light Bee X, drawn as an exploded wireframe
+blueprint. A schematic doesn't need to be photoreal to be convincing — it just
+needs to be accurate.
 
+```bash
+python3 scripts/build_hero.py   # re-grade the reel after changing SHOTS
+```
+
+Edit the `SHOTS` list at the top of `build_hero.py` to change which frames are
+in the reel and what each is captioned. Any filename from `assets/frames/`
+works.
+
+If the blueprint module fails to load the photography carries on regardless.
 Three.js r160 is vendored at `assets/vendor/three.module.min.js` (MIT).
 
 ---
+
+## Live YouTube stats
+
+Off by default. The stat tiles show the figures from the last scrape, and the
+indicator underneath reads "Stats from last sync".
+
+Switch it on in `data/site.js → LIVE`: add a YouTube Data API v3 key and set
+`enabled: true`. The site then polls every 5 minutes and animates any tile
+whose number grew, with a `+N` chip floating off it.
+
+**Restrict the key** to your domain in the Google Cloud console — it ships in
+client-side JavaScript, so the HTTP-referrer restriction is what stops anyone
+else spending your quota. Full steps are in the comment above `LIVE`.
+
+Note that YouTube rounds `subscriberCount` to three significant figures, so
+subs move in visible steps while views tick continuously.
 
 ## Layout
 

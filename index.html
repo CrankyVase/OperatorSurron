@@ -127,24 +127,36 @@
 
 <!-- ══ STATS ══════════════════════════════════════════════════════════════ -->
 <section class="stats" id="stats">
-  <div class="wrap stats__grid" id="statsGrid"></div>
+  <div class="wrap">
+    <div class="stats__grid" id="statsGrid"></div>
+    <p class="stats__live" id="statsLive" data-state="off">
+      <i class="dot"></i><span>Stats from last sync</span>
+    </p>
+  </div>
 </section>
 
-<!-- ══ THE RIG — scroll-driven 3D bike ════════════════════════════════════ -->
+<!-- ══ THE RIG — scroll-driven product display ═══════════════════════════ -->
 <section class="rig" id="rig">
   <div class="rig__pin">
+    <div class="rig__stage" id="rigStage"></div>
     <canvas class="rig__canvas" id="rigCanvas"></canvas>
-
     <div class="rig__vignette" aria-hidden="true"></div>
+    <div class="rig__weave" aria-hidden="true"></div>
 
     <div class="rig__ui">
-      <div class="wrap rig__uiwrap">
+      <div class="rig__uiwrap">
         <p class="kicker"><i>//</i> 01 — THE RIG</p>
         <h2 class="rig__title" id="rigTitle">THE <em>PURPLE ONE</em></h2>
         <p class="rig__copy" id="rigCopy">
-          Sur-Ron Light Bee X. Built from the frame up.
+          Sur-Ron Light Bee X. Powder-coated over cast alloy, built from the frame up.
         </p>
       </div>
+    </div>
+
+    <div class="rig__plate" aria-hidden="true">
+      <span class="rig__idx" id="rigIdx">01 / 08</span>
+      <span class="rig__label" id="rigLabel">SIDE PROFILE</span>
+      <span class="rig__sub" id="rigSub">Sur-Ron Light Bee X</span>
     </div>
 
     <div class="rig__spec" id="rigSpec" aria-hidden="true">
@@ -155,13 +167,16 @@
       <div class="rig__specrow"><span>BUILD</span><b>$10,000</b></div>
     </div>
 
-    <div class="rig__prog" aria-hidden="true">
-      <i id="rigProg"></i>
+    <div class="rig__phases" aria-hidden="true">
+      <span class="rig__ph on"><i></i>Reveal</span>
+      <span class="rig__ph"><i></i>Detail</span>
+      <span class="rig__ph"><i></i>Teardown</span>
+      <span class="rig__ph"><i></i>Rebuild</span>
+      <span class="rig__ph"><i></i>Ride</span>
     </div>
-    <p class="rig__hint" id="rigHint" aria-hidden="true">SCROLL TO ORBIT</p>
-    <p class="rig__fallback" id="rigFallback" hidden>
-      3D view unavailable — see the photo gallery below.
-    </p>
+
+    <div class="rig__prog" aria-hidden="true"><i id="rigProg"></i></div>
+    <p class="rig__hint" id="rigHint" aria-hidden="true">Scroll</p>
   </div>
 </section>
 

@@ -16,6 +16,29 @@ export const CHANNEL = {
   tagline: "Electric dirt bikes, over-built and ridden hard.",
 };
 
+/* ---------------------------------------------------------------------------
+   LIVE STATS (optional)
+
+   Off by default — the site shows the figures in STATS below.
+
+   To switch it on you need a YouTube Data API v3 key:
+     1. console.cloud.google.com → new project → enable "YouTube Data API v3"
+     2. Credentials → Create credentials → API key
+     3. IMPORTANT: restrict the key. Under "Application restrictions" pick
+        "Websites" and add your domain. Under "API restrictions" allow only
+        the YouTube Data API. The key ships in client-side JS, so the referrer
+        restriction is what stops other sites spending your quota.
+     4. Paste it below and set enabled: true
+
+   A poll costs 1 quota unit against a 10,000/day allowance, so a 5-minute
+   interval is comfortable even with steady traffic.
+   ------------------------------------------------------------------------- */
+export const LIVE = {
+  enabled: false,
+  apiKey: "",
+  intervalMs: 5 * 60 * 1000,
+};
+
 /* Pulled from the channel on the date below. Re-run scripts/refresh.py to update. */
 export const STATS = {
   updated: "Aug 2026",
@@ -96,6 +119,8 @@ export const KIT = [
   { group: "Capture",    name: "Action cam",           detail: "Helmet + chase angles.",                   link: "" },
   { group: "Capture",    name: "Mirrorless body",      detail: "B-roll, static beauty shots, thumbnails.", link: "" },
   { group: "Capture",    name: "Drone",                detail: "Trail chases and the wide reveal shots.",  link: "" },
+  { group: "Garage",     name: "Bike stand",           detail: "Every build video starts here.",           link: "" },
+  { group: "Garage",     name: "Torque wrench + bits", detail: "Nothing goes back on guessed.",            link: "" },
 ];
 
 /* Brands that have appeared on the channel — pulled from real video titles.
