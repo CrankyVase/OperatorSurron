@@ -20,7 +20,7 @@ const TEARDOWN_OUT = 0.62;
 
 const COPY = [
   { at: 0.00, title: "THE PURPLE ONE",
-    copy: "A Sur-Ron Light Bee X. Powder coat over cast alloy, built up from a bare frame." },
+    copy: "It's a Sur-Ron Light Bee X. Powder coat over cast alloy, built up from a bare frame." },
   { at: 0.26, title: "EVERY PART",
     copy: "About $10,000 of parts. I picked each one and fitted most of them on camera." },
   { at: TEARDOWN_IN, title: "STRIPPED BACK",

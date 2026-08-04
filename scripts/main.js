@@ -196,7 +196,7 @@ $("#kitGrid").innerHTML = KIT.map((k) => {
     }
     note.classList.remove("err");
 
-    const subject = `Sponsorship — ${d.brand} × Operator Surron (${d.type})`;
+    const subject = `Sponsorship: ${d.brand} x Operator Surron (${d.type})`;
     const body = [
       `Brand / Company: ${d.brand}`,
       `Contact: ${d.name}`,
@@ -207,7 +207,7 @@ $("#kitGrid").innerHTML = KIT.map((k) => {
       "Details:",
       d.message,
       "",
-      "— sent from operatorsurron.com",
+      "sent from operatorsurron.com",
     ].filter((l) => l !== null).join("\n");
 
     location.href = `mailto:${CHANNEL.email}?subject=${encodeURIComponent(subject)}`
@@ -264,7 +264,7 @@ $("#kitGrid").innerHTML = KIT.map((k) => {
   const openStill = (i) => {
     galIdx = (i + GALLERY.length) % GALLERY.length;
     open(`<img class="lb__img" src="${esc(GALLERY[galIdx].src)}" alt="Purple Sur-Ron still">`,
-      `Still ${galIdx + 1} of ${GALLERY.length}, pulled from the channel`, true);
+      `${galIdx + 1} / ${GALLERY.length}`, true);
   };
   const step = (d) => { if (galIdx >= 0) openStill(galIdx + d); };
 
