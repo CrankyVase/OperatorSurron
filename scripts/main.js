@@ -5,6 +5,7 @@
 import { CHANNEL, STATS, GARAGE, KIT, BRANDS, PACKAGES, ENQUIRY_TYPES } from "../data/site.js";
 import { VIDEOS, SHORTS } from "../data/channel.js";
 import { GALLERY } from "../data/gallery.js";
+import { PREVIEW } from "../data/preview.js";
 
 const $  = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -96,6 +97,29 @@ const CATS = [
       v.classList.toggle("is-hidden", cat !== "all" && v.dataset.cat !== cat);
     });
   });
+
+  /* hover previews — cycle three real in-video frames under the pointer,
+     like YouTube's own preview, but served from this repo */
+  if (!REDUCED) {
+    $$(".vid").forEach((card) => {
+      const frames = PREVIEW[card.dataset.video];
+      if (!frames?.length) return;
+      const img = card.querySelector(".vid__shot img");
+      const home = img.src;
+      let timer = null, i = -1;
+      card.addEventListener("pointerenter", () => {
+        frames.forEach((f) => { (new Image()).src = f; });   // warm the cache
+        timer = setInterval(() => {
+          i = (i + 1) % frames.length;
+          img.src = frames[i];
+        }, 600);
+      });
+      card.addEventListener("pointerleave", () => {
+        clearInterval(timer); timer = null; i = -1;
+        img.src = home;
+      });
+    });
+  }
 }
 
 /* ── shorts rail ──────────────────────────────────────────────────────────── */
@@ -213,11 +237,14 @@ $("#kitGrid").innerHTML = KIT.map((k) => {
 /* ── lightbox (video + image) ─────────────────────────────────────────────── */
 {
   const lb = $("#lightbox"), frame = $("#lbFrame"), cap = $("#lbCap");
+  const prev = $("#lbPrev"), next = $("#lbNext");
   let lastFocus = null;
+  let galIdx = -1;                       // ≥0 while a gallery still is open
 
   const close = () => {
     lb.hidden = true;
     frame.innerHTML = "";
+    galIdx = -1;
     document.body.style.overflow = "";
     lastFocus?.focus();
   };
@@ -228,10 +255,18 @@ $("#kitGrid").innerHTML = KIT.map((k) => {
     frame.style.background = isImage ? "transparent" : "#000";
     frame.style.border = isImage ? "0" : "";
     cap.textContent = caption || "";
+    prev.hidden = next.hidden = !isImage;
     lb.hidden = false;
     document.body.style.overflow = "hidden";
     $("#lbClose").focus();
   };
+
+  const openStill = (i) => {
+    galIdx = (i + GALLERY.length) % GALLERY.length;
+    open(`<img class="lb__img" src="${esc(GALLERY[galIdx].src)}" alt="Purple Sur-Ron still">`,
+      `Still ${galIdx + 1} of ${GALLERY.length}, pulled from the channel`, true);
+  };
+  const step = (d) => { if (galIdx >= 0) openStill(galIdx + d); };
 
   document.addEventListener("click", (e) => {
     const vid = e.target.closest("[data-video]");
@@ -244,18 +279,23 @@ $("#kitGrid").innerHTML = KIT.map((k) => {
       return;
     }
     const img = e.target.closest("[data-img]");
-    if (img) {
-      const i = Number(img.dataset.i);
-      open(`<img class="lb__img" src="${esc(img.dataset.img)}" alt="Purple Sur-Ron still">`,
-        `Still ${i + 1} of ${GALLERY.length} — pulled from the channel`, true);
-    }
+    if (img) openStill(Number(img.dataset.i));
   });
 
   $("#lbClose").addEventListener("click", close);
-  lb.addEventListener("click", (e) => { if (e.target === lb || e.target.closest(".lb__stage") === null) close(); });
+  prev.addEventListener("click", () => step(-1));
+  next.addEventListener("click", () => step(1));
+  lb.addEventListener("click", (e) => {
+    if (e.target.closest("button")) return;          // arrows + close handle themselves
+    if (e.target === lb || e.target.closest(".lb__stage") === null) close();
+  });
   addEventListener("keydown", (e) => {
     if (e.key === "Escape" && !lb.hidden) close();
     if (e.key === "Escape" && !drawer.hidden) setDrawer(false);
+    if (!lb.hidden && galIdx >= 0) {
+      if (e.key === "ArrowLeft") step(-1);
+      if (e.key === "ArrowRight") step(1);
+    }
   });
 }
 

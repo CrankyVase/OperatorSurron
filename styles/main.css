@@ -843,3 +843,46 @@ h1,h2,h3{margin:0;font-family:var(--f-disp);line-height:.9;letter-spacing:-.035e
 @media (max-width:900px){
   .rig__num{font-size:clamp(6rem,26vw,9rem);right:var(--gut)}
 }
+
+/* ── story timeline — a draggable rail through the channel's history ─────── */
+.rail--story{gap:0;padding-top:2.6rem;scroll-snap-type:none}
+.story__c{position:relative;flex:0 0 auto;width:min(78vw,300px);margin-right:.9rem;
+  display:flex;flex-direction:column;align-items:flex-start;text-align:left;
+  min-height:206px;padding:1.4rem 1.4rem 1.5rem;cursor:pointer;
+  background:var(--panel);background-image:var(--weave);background-size:var(--weave-size);
+  background-position:var(--weave-pos);
+  border:1px solid var(--line-2);border-radius:2px;
+  transition:transform var(--t-slow) var(--ease),border-color var(--t),background-color var(--t)}
+.story__c:hover{transform:translateY(-5px);border-color:var(--line-3);
+  background-color:var(--panel-2)}
+/* each card draws its own segment of the timeline; segments overlap the gaps
+   so the line reads as continuous across the whole rail */
+.story__c::before{content:"";position:absolute;top:-1.35rem;left:-1rem;right:-1rem;
+  height:1px;background:var(--line)}
+.story__c::after{content:"";position:absolute;top:calc(-1.35rem - 3px);left:2px;
+  width:7px;height:7px;background:var(--violet);transform:rotate(45deg)}
+.story__d{font:500 .6rem/1 var(--f-mono);letter-spacing:.24em;color:var(--violet);
+  margin-bottom:.9rem}
+.story__t{font-family:var(--f-disp);font-size:1.45rem;line-height:1;color:var(--white);
+  font-variation-settings:"wdth" 114,"wght" 800;letter-spacing:-.03em;
+  margin-bottom:.6rem}
+.story__x{font-size:.87rem;line-height:1.5;color:var(--ink-2)}
+.story__v{margin-top:auto;padding-top:1rem;font:400 .62rem/1 var(--f-mono);
+  letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3)}
+.story__c--now{border-color:rgba(155,109,255,.4)}
+.story__c--now::after{background:var(--white)}
+.story__c--now .story__v{color:var(--violet)}
+.story__c:last-child{margin-right:var(--gut)}
+
+/* ── lightbox prev/next ──────────────────────────────────────────────────── */
+.lb__nav{position:absolute;top:50%;transform:translateY(-50%);z-index:2;
+  width:48px;height:48px;background:transparent;border:1px solid var(--line-2);
+  border-radius:2px;color:var(--ink);font-size:1.1rem;line-height:1;cursor:pointer;
+  transition:all var(--t) var(--ease)}
+.lb__prev{left:1.4rem}
+.lb__next{right:1.4rem}
+.lb__nav:hover{background:var(--white);color:#000;border-color:var(--white)}
+@media (max-width:700px){
+  .lb__nav{top:auto;bottom:1.2rem;transform:none}
+  .lb__prev{left:auto;right:calc(1.4rem + 58px)}
+}

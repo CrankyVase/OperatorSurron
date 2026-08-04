@@ -15,11 +15,43 @@ const lerp = (a, b, t) => a + (b - a) * t;
 export function initFX({ reduced = false } = {}) {
   initOdometers(reduced);
   initSpy();
+  initDragRails();
   if (reduced) return;                    // everything below is pure motion
   initCursor();
   initMagnets();
   initStrips();
   initHeroParallax();
+}
+
+/* ── drag-to-scroll rails (shorts + story) ───────────────────────────────── */
+function initDragRails() {
+  ["#shortsRail", "#storyRail"].forEach((sel) => {
+    const rail = $(sel);
+    if (!rail) return;
+    let down = false, startX = 0, startL = 0, moved = 0;
+
+    rail.addEventListener("pointerdown", (e) => {
+      if (e.pointerType !== "mouse") return;         // touch scrolls natively
+      down = true; moved = 0;
+      startX = e.clientX; startL = rail.scrollLeft;
+      rail.style.scrollSnapType = "none";            // snap fights the drag
+    });
+    addEventListener("pointermove", (e) => {
+      if (!down) return;
+      const d = e.clientX - startX;
+      moved = Math.max(moved, Math.abs(d));
+      if (moved > 4) rail.scrollLeft = startL - d;
+    }, { passive: true });
+    addEventListener("pointerup", () => {
+      if (!down) return;
+      down = false;
+      rail.style.scrollSnapType = "";
+    });
+    // a drag must not fire the card underneath it as a click
+    rail.addEventListener("click", (e) => {
+      if (moved > 8) { e.preventDefault(); e.stopPropagation(); }
+    }, true);
+  });
 }
 
 /* ── odometer — every big number rolls like hardware ─────────────────────── */

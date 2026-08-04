@@ -88,6 +88,7 @@ Then update the hard-coded figures in `data/site.js → STATS` and the
 | `find_purple.py` | Scores each frame for how much of the violet Sur-Ron paint it contains |
 | `build_gallery.py` | Curates the best purple-bike shots into `assets/gallery/` |
 | `build_hero.py` | Grades the eight-shot reel for the scroll display |
+| `build_previews.py` | Pulls 3 real frames per video for the hover previews |
 | `fetch_fonts.py` | Re-downloads the self-hosted webfonts |
 
 `find_purple.py` is hue-matching, so it occasionally flags something that
@@ -165,6 +166,16 @@ assets/vendor/          Three.js
 `harvest_frames.py` to regenerate it.
 
 ---
+
+## The story timeline
+
+The "Story So Far" section in `index.html` is hand-written from real uploads —
+each card opens its video. When the channel hits a new milestone, add a card
+there and keep the dates in the mono `MMM YYYY` format.
+
+Hovering a video card cycles three real frames from the video (YouTube's
+`maxres1/2/3` endpoints), served from `assets/preview/`. Re-run
+`scripts/build_previews.py` after refreshing the channel data.
 
 ## The interaction layer
 
